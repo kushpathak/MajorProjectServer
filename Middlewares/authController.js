@@ -7,7 +7,7 @@ module.exports.requireAuth = async (req, res, next) => {
     res.send("Not Logged In");
   }
   // const token = req.cookies.jwt;
-  if (token) {
+  else if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         res.send("Not Logged In");
