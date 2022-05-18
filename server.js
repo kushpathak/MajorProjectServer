@@ -18,7 +18,7 @@ server.use(express.json());
 server.use(express.static("public"));
 server.use(cookieParser());
 const PORT = 9000;
-const dbURI = env.MONGO_URI
+const dbURI = process.env.MONGO_URI
 mongoose
   .connect(dbURI, {
     useNewUrlParser: true,

@@ -69,7 +69,7 @@ module.exports.login = async (req, res) => {
   try {
     const user = await User.login(user_id, password);
 
-    const token = jwt.sign({ user_id }, config.JWT_SECRET, {
+    const token = jwt.sign({ user_id }, process.env.JWT_SECRET, {
       expiresIn: 60 * 60 * 2,
     });
 

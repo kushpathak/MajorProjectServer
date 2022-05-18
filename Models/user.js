@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-const saltRounds = require("dotenv").SALT_ROUNDS;
+const saltRounds = process.env.SALT_ROUNDS
 const userSchema = new mongoose.Schema({
   user_id: {
     type: String,

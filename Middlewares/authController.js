@@ -11,7 +11,7 @@ module.exports.requireAuth = async (req, res, next) => {
   }
   // const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, config.JWT_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
         res.setHeader("Content-Type", "application/json");
         res.status(401);
