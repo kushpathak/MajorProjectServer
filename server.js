@@ -29,7 +29,7 @@ mongoose
     server.listen(PORT);
   })
   .catch((err) => console.log(err));
-server.get("/", requireAuth, (req, res) => {
+server.get("/", (req, res) => {
   res.send("Server Running");
 });
 server.use(API);
