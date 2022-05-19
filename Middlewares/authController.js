@@ -3,7 +3,7 @@ const config = require("dotenv").config().parsed;
 var cookies = require("cookie-parser");
 module.exports.requireAuth = async (req, res, next) => {
   const token = req.params["jwt"];
-  console.log(token);
+  console.log(req.params);
   if (!token) {
     res.setHeader("Content-Type", "application/json");
     res.status(401);
