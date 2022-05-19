@@ -5,19 +5,28 @@ module.exports.requireAuth = async (req, res, next) => {
   const token = req.cookies["jwt"];
   console.log(token);
   if (!token) {
-    res.send("Not Logged In");
+    res.setHeader("Content-Type", "application/json");
+    res.status(401);
+    res.write("Not Logged In");
+    res.end();
   }
   // const token = req.cookies.jwt;
   else if (token) {
     console.log(token, process.env.JWT_SECRET);
     jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
       if (err) {
-        res.send("Not Logged In");
+        res.setHeader("Content-Type", "application/json");
+        res.status(401);
+        res.write("Not Logged In");
+        res.end();
       } else {
         next();
       }
     });
   } else {
-    res.send("Not Logged In");
+    res.setHeader("Content-Type", "application/json");
+    res.status(401);
+    res.write("Not Logged In");
+    res.end();
   }
 };
