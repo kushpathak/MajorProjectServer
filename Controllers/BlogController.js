@@ -4,6 +4,8 @@ const User = require("../Models/user");
 const multer = require("multer");
 const { v4: uuidv4 } = require("uuid");
 const Trending = require("../Models/trending");
+var request = require("request");
+
 const ErrorHandler = (error) => {
   var Error = { title: "", snippet: "" };
   Object.values(error.errors).forEach((val) => {
@@ -15,6 +17,42 @@ const compare = (blog_1, blog_2) => {
   // console.log(blog_1.clicks > blog_2.clicks);
   return blog_1.clicks < blog_2.clicks;
 };
+module.exports.searchImage = async (req, res) => {
+  var image = null;
+  if (req.file) image = req.file.filename;
+  const blogs = await Blog.find();
+  const blogMap = new Map()
+  const imageList = [];
+  blogs.forEach((blog) => {
+    if (blog.image) imageList.push(blog.image);
+    blogMap.set(blog.image, blog);
+  });
+  let body = {
+    "current": image,
+    "imageList": imageList
+  }
+  let blogsMatched = null;
+  request.post(
+    {
+      url: "http://127.0.0.1:8000/similar",
+      json: body
+    },
+    function (error, response, body) {
+      if(!error) {
+        const resultBlogs = [];
+        const mssg = body.message;
+        mssg.forEach((img) => {
+          resultBlogs.push(blogMap.get(img));
+        });
+        res.status(201).send(resultBlogs);
+      }
+      else {
+        res.status(404).send("Some Error Occured");
+      }
+    }
+  );
+};
+
 module.exports.blogAdd = async (req, res) => {
   const title = req.body.title;
   const author = req.body.author;

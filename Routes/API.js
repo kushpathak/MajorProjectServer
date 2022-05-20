@@ -25,8 +25,17 @@ const profileStorage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
+const tempStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/temp");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  },
+});
 let upload = multer({ storage: storage });
 let uploadProfile = multer({ storage: profileStorage });
+let uploadSearch = multer({ storage: tempStorage });
 router.post("/add-comment", requireAuth, CommentController.commentAdd);
 router.post(
   "/add-blog",
@@ -34,7 +43,11 @@ router.post(
   upload.single("photo"),
   BlogController.blogAdd
 );
-
+router.post(
+  "/search-image",
+  uploadSearch.single("photo"),
+  BlogController.searchImage
+);
 router.post("/signup", userController.signup);
 router.post("/login", userController.login);
 router.post("/save-post", requireAuth, SavedPostController.savePosts);
