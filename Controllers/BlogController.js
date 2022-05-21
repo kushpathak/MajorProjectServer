@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const Trending = require("../Models/trending");
 var request = require("request");
 
-const url = 'http://1254-103-170-164-44.ngrok.io'                                                     
+const url = 'http://f050-103-170-164-44.ngrok.io'                                                     
 const ErrorHandler = (error) => {
   var Error = { title: "", snippet: "" };
   Object.values(error.errors).forEach((val) => {
