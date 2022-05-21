@@ -33,6 +33,7 @@ module.exports.searchImage = async (req, res) => {
     "imageList": imageList
   }
   let blogsMatched = null;
+  console.log(`${url}/similar`);
   request.post(
     {
       url: `${url}/similar`,
