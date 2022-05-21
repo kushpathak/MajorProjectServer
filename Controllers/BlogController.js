@@ -6,6 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 const Trending = require("../Models/trending");
 var request = require("request");
 
+const url = 'http://f395-103-170-164-44.ngrok.io'                                                     
 const ErrorHandler = (error) => {
   var Error = { title: "", snippet: "" };
   Object.values(error.errors).forEach((val) => {
@@ -34,7 +35,7 @@ module.exports.searchImage = async (req, res) => {
   let blogsMatched = null;
   request.post(
     {
-      url: "http://127.0.0.1:8000/similar",
+      url: `${url}/similar`,
       json: body
     },
     function (error, response, body) {
